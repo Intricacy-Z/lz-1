@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用户登录</title>
+</head>
+<body>
+<h1>用户登录</h1>
+<form id="form-login" method="post" action="login">
+<table cellpadding="5">
+  <tr>
+    <td>用户名</td>
+    <td><input name="username" /><span style="color:red;" id="span-username"></span></td>
+  </tr>
+  <tr>
+    <td>密码</td>
+    <td><input name="password" /><span style="color:red;" id="span-password"></span></td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <input type="button" onclick="login()" value="登录" />
+    </td>
+  </tr>
+</table>
+</form>
+<script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+function login() {
+	$("#span-username").empty();
+	$("#span-password").empty();
+	
+	$.ajax({
+		"url":"/login",
+		"data":$("#form-login").serialize(),
+		"type":"post",
+		"dataType":"json",
+		"success":function(json) {
+			if (json.state == 1) {
+				alert("登录成功！");
+			} else if (json.state == 2) {
+				// alert("用户名不存在！");
+				$("#span-username").html("用户名不存在！");
+			} else if (json.state == 3) {
+				// alert("密码错误！");
+				$("#span-password").html("密码错误！");
+			}
+		}
+	});
+}
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
